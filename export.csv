@@ -7,8 +7,8 @@ ensalada,medio bajo,rapido,media,
 ensalada de pollo,medio alto,rapido,media alta,ensalada pollo
 ensalada de atun,medio alto,rapido,media alta,ensalada mariscos
 tacos ,medio bajo,rapido medio,baja,
-tacos de res,medio bajo,rapido medio lento,baja media,tacos carne
-tacos al pastor,medio bajo,rapido medio lento,baja media,tacos carne
+tacos de res,medio bajo,rapido medio lento,baja media,tacos carne pan
+tacos al pastor,medio bajo,rapido medio lento,baja media,tacos carne pan
 hamburguesa,medio alto,rapido medio,media alta,pan carne
 mariscos ,alto medio bajo,medio lento,alta,mariscos
 pan,medio bajo,medio lento,media,pan
@@ -21,8 +21,8 @@ tapado de mariscos,alto,lento,alta,mariscos
 ceviche de camaron,alto,rapido,media,mariscos
 ceviche de pulpo,alto,rapido,media,mariscos
 ceviche de pescado,alto,rapido,media,mariscos
-tacos Tlaquepaque,medio,medio rapido,media,pan carne
-tacos de lengua,alto,medio,media,pan carne
+tacos Tlaquepaque,medio,medio rapido,media,pan carne tacos
+tacos de lengua,alto,medio,media,pan carne tacos
 lentejas estofadas,medio,medio,media,verduras glutenfree
 farinata genovesa,medio,rapido,alta,glutenfree
 yakisoba con carne,alto,medio,alta,carne glutenfree

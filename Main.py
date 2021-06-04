@@ -69,6 +69,9 @@ print("El tiempo de carga depende de tu conexion")
 print("Inicializando la Base de Datos...")
 #Se inicia la base de datos                                #LINK DE LA BASE             #PASSWORD
 greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
+print("Se termino de agregar los Datos a la Base de Datos...\n")
+print("Iniciando...")
+#la variable greeter guarda la base de datos que se esta utilizando
 
 #Funcion de Menu
 def menu_function(indice_user_recieved):
@@ -229,12 +232,13 @@ def menu_function(indice_user_recieved):
             print("2. Medio")
             print("3. Alto\n")
             
+            # Se crea un verificar y se crea el ciclo
             verificador = False
-
             while(verificador == False):
-                
+                #Se ingresa la opcion
                 opcion = input("")
                 
+                #Se compara
                 if(opcion == "1"):
                     precio = "bajo"
                     verificador = True
@@ -247,17 +251,19 @@ def menu_function(indice_user_recieved):
                 else:
                     print("\nOpcion no valida, ingrese uno existente\n")
 
-                
+            # Se brindan las opciones para el usuario
             print("Ingresa el tiempo de preparacion del platillo que desea agregar:")
             print("1. Lento")
             print("2. Medio")
             print("3. Rapido\n")
 
+            # Se crea el verificador y el ciclo
             verificador = False
-
             while(verificador == False):
+                # Se ingresa la opcion
                 opcion = input("")
                 
+                #Se compara
                 if(opcion == "1"):
                     tiempo = "lento"
                     verificador = True
@@ -271,17 +277,20 @@ def menu_function(indice_user_recieved):
                     print("\nOpcion no valida, ingrese uno existente\n")
 
             
-            
+            # Se dan las opciones al usuario
             print("Ingresa el contenido nutricional del platillo que desea agregar:")
             print("1. Baja")
-            print("2. Media") #Puede que en esta parte haya error.
+            print("2. Media") 
             print("3. Alta\n")
-
+            
+            # Se crea el verificador y el ciclo
             verificador = False
-
             while(verificador == False):
+
+                #Se obtiene la opcion
                 opcion = input("")
 
+                #Se compara
                 if(opcion == "1"):
                     nutricion = "baja"
                     verificador = True
@@ -295,6 +304,7 @@ def menu_function(indice_user_recieved):
                     print("\nOpcion no valida, ingrese uno existente\n")
             
             
+            #Se dan las opciones al usuario
             print("Ingresa la relacion de su platillo que desea agregar:")
             print("1. Carne")
             print("2. Pasta")
@@ -310,12 +320,14 @@ def menu_function(indice_user_recieved):
             print("12. Chocolate")
             print("13. Mariscos\n")
             
-
+            # Se crea el verificador y el ciclo
             verificador = False
-
             while(verificador == False):
+
+                # Se obtiene la respuesta del usuario
                 opcion = input("")
 
+                #Se compara
                 if(opcion == "1"):
                     relacion = "carne"
                     verificador = True
@@ -358,17 +370,21 @@ def menu_function(indice_user_recieved):
                 else:
                     print("\nOpcion no valida, ingrese uno existente\n")
 
+            #Se realiza la el agregado del objeto a la base de datos
             HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion)
             
 
 
         #Opcion para poder eliminar un registro de la base de datos.
         elif(int(opcionprincipal) == 3):
+            # Se solicita el nombre
             print("Ingresa el nombre del platillo que desea eliminar:")
             nombre = input("")
+            # Se realiza la funcion de eliminar
             HelloWorldExample.delete_relationship(greeter, nombre)
             print("\n¡Platillo eliminado de la base de datos exitosamente!\n")
 
+        # Se Sale del menu
         elif(int(opcionprincipal) == 4):
             print("🍴 Gracias por utilizar el sistema de recomendaciones 🍴")
             sys.exit()
@@ -378,13 +394,7 @@ def menu_function(indice_user_recieved):
 i=0
 ciclo = True
 while ciclo:
-    print("Se termino de agregar los datos a la Base de Datos...\n")
-    print("Iniciando")
-    #print(user)
-    #print(password)
-    #print(maindish)
-    #print(food)
-    #print(foodCounter)
+    # Se compara la cantidad de usuarios que existen
     if(len(user)==0):
         print("Generando nuevo usuario\n")
         name = input("Ingrese el nombre de la cuenta: ")
@@ -393,30 +403,41 @@ while ciclo:
         password.append(coss)
         maindish.append("")
         print("Usuario y Contraseña creada\n")
+        # Se pide el usuario
     elif(len(user)>0):
         print("1. Crear nuevo usuario")
         print("2. Iniciar sesion")
         print("3. Salir del programa")
+        # Se pide la opcion
         opcion = input("Ingrese su opcion: ")
+        # Se pasa a crear el usuario
         if((opcion) =="1"):
             print("Generando nuevo usuario\n")
+            #Se pide el usuario y el password
             name = input("Ingrese el nombre de la cuenta: ")
             coss = input("Ingrese la contraseña: ")
             user.append(name)
             password.append(coss)
             maindish.append("")
             print("Usuario y Contraseña creada\n")
+            # Se inicia sesion
         elif((opcion) =="2"):
             print("Iniciar sesion")
+            # Se pide el user y el password
             input_user=input("Ingrese su nombre de usuario: ")
             input_pass=input("Ingrese la contraseña: ")
+            #Se compara si existe el usuario
             if(user.__contains__(input_user)):
-                indice_user = user.index(input_user)    
+                indice_user = user.index(input_user)
+                # Se compara si la password es correcta
                 if(user[indice_user]==input_user):
                     if(password[indice_user] == input_pass):
                         menu_function(indice_user)
                     else:
-                        print("Contraseña incorrecta")
+                        print("\nContraseña incorrecta\n")
+            else:
+                print("\nUsuario Incorrecto\n")
+        # Se sale del programa
         elif((opcion) =="3"):
             print("🍴 Espero que vuelva pronto 🍴")
             ciclo = False
