@@ -8,6 +8,12 @@ from neo4j.work.simple import Query
 import pandas as pd
 import neo4j
 
+# Proyecto 2
+# Estructuras de Datos seccion 10
+# Yong Bum Park 20117
+# Pedro Pablo Arriola Jimenez 20188
+# Oscar Fernando Lopez Barrios 20679
+
 class HelloWorldExample:
 
     def __init__(self, uri, user, password):
@@ -203,14 +209,14 @@ class HelloWorldExample:
     
     
     #buscar y mostrar las relaciones que tiene el nodo
-    def find_node(self, price, time, nutrition, relation):
+    def find_node(self, price, time, nutrition, relation, base):
         with self.driver.session() as session:
-            result = session.read_transaction(self._find_and_return_node, price, time, nutrition, relation)
+            result = session.read_transaction(self._find_and_return_node, price, time, nutrition, relation, base)
             #for record in result:
                 #print("Found person: {record}".format(record=record))
 
     @staticmethod
-    def _find_and_return_node(tx, price, time, nutrition, relation):
+    def _find_and_return_node(tx, price, time, nutrition, relation, base):
         recomendacion = ""
         query = (
             '''
@@ -220,9 +226,11 @@ class HelloWorldExample:
             (p)<-[:ingrediente]-(p4:Relacion{message:"%s"}) return p.message
             '''%(price, time, nutrition, relation)
         )
-        greeter = HelloWorldExample(uri="bolt://34.205.171.52:7687", user="neo4j", password="light-mirrors-plants")
-        result = greeter.query(query, 'neo4j')
-        print(result)
+        result = base.query(query, 'neo4j')
+        i = 1
+        for elements in result:
+            print(str(i) + ") "+ elements["p.message"])
+            i += 1
 
         #return [record["message"] for record in result]
 

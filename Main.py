@@ -3,7 +3,7 @@ from neo import HelloWorldExample
 import sys
 
 # Proyecto 2
-# Estructuras de Datos
+# Estructuras de Datos seccion 10
 # Yong Bum Park 20117
 # Pedro Pablo Arriola Jimenez 20188
 # Oscar Fernando Lopez Barrios 20679
@@ -23,10 +23,10 @@ nutricionGeneral=["alta","media","baja"]
 priceGeneral=["alto","medio","bajo"]
 
 # Se guarda la eleccion del usuario
-myfood = "-"
-myprice = "-"
-mytime= "-"
-mynutricion= "-"
+myfood = ""
+myprice = ""
+mytime= ""
+mynutricion= ""
 
 # Listas donde se guarda la recomendacion
 foodInterest=[]
@@ -65,15 +65,16 @@ with open('export.csv', 'r') as csvDataFile:
         else:
             i=i+1
 
-
-
+print("El tiempo de carga depende de tu conexion")
 print("Inicializando la Base de Datos...")
+#Se inicia la base de datos                                #LINK DE LA BASE             #PASSWORD
 greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
 
-#funcion dle menu
+#Funcion de Menu
 def menu_function(indice_user_recieved):
     menu = True
     while menu:
+        #Se imprimen las opciones para el usuario
         print("\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴\n")
         print("Bienvenido al Sistema de Recomendacion de Alimentos")
         print("___________________________________")
@@ -83,15 +84,15 @@ def menu_function(indice_user_recieved):
         print("3. Remover Platillo")
         print("4. Salir del programa\n")
         
+        #Se obtiene la opcion
         opcionprincipal =  input("Ingrese la opcion: ")
-            
+
+        # Se compara con las opciones
+        # Se ingresa al menu de las recomendaciones   
         if(int(opcionprincipal) == 1):
-            print("1. Seleccionar ingredientes principales")
-            print("2. Seleccionar tiempo de entrega")
-            print("3. Seleccionar contenido nutricional")
-            print("4. Seleccionar precio")
-            print("5. Buscar listado de recomendaciones")
-            print("6. Regresar al inicio\n")
+            print("1. Cuestionario para ayudarte a encontrar más alimentos :)")
+            print("2. Mostrar recomendaciones")
+            print("3. Regresar al inicio\n")
             
             opcion = input("Ingrese una opcion: ")
             print("\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴")
@@ -107,7 +108,6 @@ def menu_function(indice_user_recieved):
                         print(tipoPlatillo)
                         print("1. Agregar ingrediente a la lista")
                         print("2. Siguiente ingrediente")
-                        print("3. Regresar al menu principal\n")
                         
                         op = input("Ingrese una opcion: ")
                         if(op=="1"):
@@ -116,33 +116,19 @@ def menu_function(indice_user_recieved):
                             break
                         elif(op=="2"):
                             True
-                        elif(op=="3"):
-                            comida=False
-                            break
                         else:
                             print("Error, ingresa solo del 1-3")
                         print("\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴")
-
-                print("\n\n___________________________________")
-                print("Ingredientes escogidos:")
-                print(myfood)
-                print("Tiempos de preparacion escogidos:")
-                print(mytime)
-                print("Contenidos Nutrcionales escogidos:")
-                print(mynutricion)
-                print("Precios escogidos:")
-                print(myprice)
                     
-            #escoger tiempo
-            elif(opcion=="2"):
                 tiempo = True
+
+                #Se escoge el tiempo de preparacion
                 while tiempo:
                     for tipoTiempo in timeGeneral:
                             print("\n------- TIEMPO DE PREPARACION -------\n")
                             print(tipoTiempo)
                             print("1. Seleccionar tiempo de preparacion")
                             print("2. Siguiente opcion")
-                            print("3. Regresar al menu principal\n")
                             op = input("Ingrese una opcion: ")
                             if(op=="1"):
                                 mytime = tipoTiempo
@@ -150,25 +136,12 @@ def menu_function(indice_user_recieved):
                                 break
                             elif(op=="2"):
                                 True
-                            elif(op=="3"):
-                                tiempo=False
-                                break
                             else:
                                 print("Error, ingresa solo del 1-3")
                             print("\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴")
-
-                print("\n\n___________________________________")
-                print("Ingredientes escogidos:")
-                print(myfood)
-                print("Tiempos de preparacion escogidos:")
-                print(mytime)
-                print("Contenidos Nutrcionales escogidos:")
-                print(mynutricion)
-                print("Precios escogidos:")
-                print(myprice)
                 
-            #escoger contenido nutricional
-            elif(opcion=="3"):
+                
+                #escoger contenido nutricional
                 nutri = True
                 while nutri:
                     for tipoNutricion in nutricionGeneral:
@@ -176,7 +149,6 @@ def menu_function(indice_user_recieved):
                             print(tipoNutricion)
                             print("1. Agregar el contenido nutricional deseado a la lista")
                             print("2. Siguiente opcion de contenido nutricional")
-                            print("3. Regresar al menu principal\n")
                             op = input("Ingrese una opcion: ")
                             if(op=="1"):
                                 mynutricion = tipoNutricion
@@ -184,25 +156,10 @@ def menu_function(indice_user_recieved):
                                 break
                             elif(op=="2"):
                                 True
-                            elif(op=="3"):
-                                nutri=False
-                                break
                             else:
                                 print("Error ingresa solo del 1-3")
                             print("\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴")
-
-                print("\n\n___________________________________")
-                print("Ingredientes escogidos:")
-                print(myfood)
-                print("Tiempos de preparacion escogidos:")
-                print(mytime)
-                print("Contenidos Nutrcionales escogidos:")
-                print(mynutricion)
-                print("Precios escogidos:")
-                print(myprice)
-            
-            #escoger precio
-            elif(opcion=="4"):
+                #escoger el precio que desea
                 precio = True
                 while precio:
                     for tipoPrecio in priceGeneral:
@@ -210,7 +167,6 @@ def menu_function(indice_user_recieved):
                             print(tipoPrecio)
                             print("1. Agregar el tipo de precio deseado a la lista")
                             print("2. Siguiente opcion de tipo de precio")
-                            print("3. Regresar al menu principal\n")
                             op = input("Ingrese una opcion: ")
                             if(op=="1"):
                                 myprice = tipoPrecio
@@ -218,13 +174,11 @@ def menu_function(indice_user_recieved):
                                 break
                             elif(op=="2"):
                                 True
-                            elif(op=="3"):
-                                precio=False
-                                break
                             else:
                                 print("Error ingresa solo del 1-3")
                             print("\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴")
 
+                #mostrar lo que selecciono el usuario
                 print("\n\n___________________________________")
                 print("Ingredientes escogidos:")
                 print(myfood)
@@ -236,106 +190,23 @@ def menu_function(indice_user_recieved):
                 print(myprice)
 
             #buscar platillos que satisfacen con lo que se desea
-            elif(opcion=="5"):
-                HelloWorldExample.find_node(greeter,"alto", "rapido", "alta", "mariscos")
-                """
-                nutricioncopy=[]
-                #limpiar el original
-                foodInterest.clear()
-                timeInterest.clear()
-                priceInterest.clear()
-                nutricionInterest.clear()
-
-                #para el tipo de platillo
-                if(len(myfood)!=0):
-                    i=0
-                    for types in relation:
-                        for cliente in myfood:
-                            if(types.__contains__(cliente)):
-                                if(foodInterest.__contains__(food[i])):
-                                    True
-                                else:
-                                    #original
-                                    foodInterest.append(food[i])
-                                    timeInterest.append(time[i])   
-                                    priceInterest.append(price[i])   
-                                    nutricionInterest.append(str(nutricion[i]))                 
-                        #aumentar
-                        i=i+1 
+            elif(opcion=="2"):
+                tiene = bool(myfood)
+                if(tiene):
+                    print("\n\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴 RECOMENDACIONES EN BASE A SU BUSQUEDA 🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴\n")
+                    # Por medio de Find node se hace la busqueda de los platillos
+                    HelloWorldExample.find_node(greeter,myprice, mytime, mynutricion, myfood, greeter)
+                else:
+                    print("\n¡No existen parametros para realizar la recomendacion!\n")
                 
-                #para el tiempo
-                if(len(mytime)!=0):
-                    i=0
-                    for types in timeInterest:
-                        yes=0
-                        for cliente in mytime:
-                            if(types.__contains__(cliente)):
-                                yes = yes + 1
-                        #si es igual a 0 no tiene ninguno que cumpla con el requisito del tiempo y se quitara de la lista
-                        if(yes==0):
-                            indice = foodInterest.index(foodInterest[i])
-                            foodInterest[indice]= "0"
-                            timeInterest[indice]= "0"
-                            priceInterest[indice]= "0"
-                            nutricionInterest[indice]= "0"
-                        #aumentar
-                        i=i+1
-
-                #para nutricion 
-                if(len(mynutricion)!=0):
-                    i=0
-                    for types in nutricionInterest:
-                        yes=0
-                        for cliente in mynutricion:
-                            if(types.__contains__(cliente)):
-                                yes = yes + 1
-                        #si es igual a 0 no tiene ninguno que cumpla con el requisito del tiempo y se quitara de la lista
-                        if(yes==0):
-                            indice = foodInterest.index(foodInterest[i])
-                            foodInterest[indice]= "0"
-                            timeInterest[indice]= "0"
-                            priceInterest[indice]= "0"
-                            nutricionInterest[indice]= "0"
-                        #aumentar
-                        i=i+1
-
-                #para precio
-                if(len(myprice)!=0):
-                    i=0
-                    for types in priceInterest:
-                        yes=0
-                        for cliente in myprice:
-                            if(types.__contains__(cliente)):
-                                yes = yes + 1
-                        #si es igual a 0 no tiene ninguno que cumpla con el requisito del tiempo y se quitara de la lista
-                        if(yes==0):
-                            indice = foodInterest.index(foodInterest[i])
-                            foodInterest[indice]= "0"
-                            timeInterest[indice]= "0"
-                            priceInterest[indice]= "0"
-                            nutricionInterest[indice]= "0"
-                        #aumentar
-                        i=i+1
-
-                #mostar resultado final
-                print("\n\n🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴 RECOMENDACIONES EN BASE A SU BUSQUEDA 🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴🍴\n")
-                for plato in foodInterest:
-                    if(plato!="0"):
-                        print(plato)
-                        food_index=food.index(plato)
-                        data = foodCounter[food_index]
-                        data = data + 1
-                        foodCounter.insert(food_index, data)
-
-                maindish.insert(int(indice_user_recieved),foodInterest)"""
                 
-            #terminar el ciclo
-            elif(opcion=="6"):
-                print("\n🍴 Vuelve pronto al sistema de recomendaciones alimenticias 🍴\n")
+            #terminar el ciclo y regresar al inicio
+            elif(opcion=="3"):
+                print("\n🍴 Regresando al menu principal... 🍴\n")
                 menu=False
             #mostrar error
             else:
-                print("Error, Ingrese solo del 1-6") 
+                print("Error, Ingrese solo del 1-3") 
         
         #Opcion para poder agregar un nuevo platillo a la base de datos.
         elif(int(opcionprincipal) == 2):
@@ -347,10 +218,12 @@ def menu_function(indice_user_recieved):
             relacion = ""
             opcion = ""
             
+            # Se obtiene el nombre del platillo
             print("Ingresa el nombre del platillo que desea agregar:\n")
             nombre = input("")
             nombre.lower()
             
+            # Se brindan las opciones al usuario
             print("Ingresa el precio del platillo que desea agregar:")
             print("1. Bajo")
             print("2. Medio")
@@ -484,13 +357,7 @@ def menu_function(indice_user_recieved):
                     verificador = True
                 else:
                     print("\nOpcion no valida, ingrese uno existente\n")
-            content = []
-            content.append(nombre)
-            content.append(precio)
-            content.append(tiempo)
-            content.append(nutricion)
-            content.append(relacion)
-            HelloWorldExample.add_row('export.csv',content)
+
             HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion)
             
 
@@ -500,7 +367,7 @@ def menu_function(indice_user_recieved):
             print("Ingresa el nombre del platillo que desea eliminar:")
             nombre = input("")
             HelloWorldExample.delete_relationship(greeter, nombre)
-            HelloWorldExample.delete_platillo(nombre)
+            print("\n¡Platillo eliminado de la base de datos exitosamente!\n")
 
         elif(int(opcionprincipal) == 4):
             print("🍴 Gracias por utilizar el sistema de recomendaciones 🍴")
@@ -511,30 +378,34 @@ def menu_function(indice_user_recieved):
 i=0
 ciclo = True
 while ciclo:
-    print(user)
-    print(password)
+    print("Se termino de agregar los datos a la Base de Datos...\n")
+    print("Iniciando")
+    #print(user)
+    #print(password)
     #print(maindish)
     #print(food)
     #print(foodCounter)
     if(len(user)==0):
-        print("Generando nuevo usuario")
+        print("Generando nuevo usuario\n")
         name = input("Ingrese el nombre de la cuenta: ")
         coss = input("Ingrese la contraseña: ")
         user.append(name)
         password.append(coss)
         maindish.append("")
+        print("Usuario y Contraseña creada\n")
     elif(len(user)>0):
         print("1. Crear nuevo usuario")
         print("2. Iniciar sesion")
         print("3. Salir del programa")
         opcion = input("Ingrese su opcion: ")
         if((opcion) =="1"):
-            print("Generando nuevo usuario")
+            print("Generando nuevo usuario\n")
             name = input("Ingrese el nombre de la cuenta: ")
             coss = input("Ingrese la contraseña: ")
             user.append(name)
             password.append(coss)
             maindish.append("")
+            print("Usuario y Contraseña creada\n")
         elif((opcion) =="2"):
             print("Iniciar sesion")
             input_user=input("Ingrese su nombre de usuario: ")
