@@ -1,4 +1,5 @@
 #codigo obtenido de https://neo4j.com/docs/api/python-driver/current/
+# y de https://towardsdatascience.com/neo4j-cypher-python-7a919a372be7
 from neo4j import GraphDatabase
 import logging
 import csv
@@ -16,6 +17,7 @@ import neo4j
 
 class HelloWorldExample:
 
+    # Se inicializa la base de datos y la clase
     def __init__(self, uri, user, password):
         self.__uri = uri
         self.__user = user
@@ -26,9 +28,11 @@ class HelloWorldExample:
         except Exception as e:
             print("Failed to create the driver:", e)
 
+    # Se cierra la base de datos
     def close(self):
         self.driver.close()
 
+    # Se crea el query para las opciones de la base de datos
     def query(self, query, db=None):
         assert self.driver is not None, "Driver not initialized!"
         session = None
@@ -212,8 +216,6 @@ class HelloWorldExample:
     def find_node(self, price, time, nutrition, relation, base):
         with self.driver.session() as session:
             result = session.read_transaction(self._find_and_return_node, price, time, nutrition, relation, base)
-            #for record in result:
-                #print("Found person: {record}".format(record=record))
 
     @staticmethod
     def _find_and_return_node(tx, price, time, nutrition, relation, base):
@@ -231,8 +233,6 @@ class HelloWorldExample:
         for elements in result:
             print(str(i) + ") "+ elements["p.message"])
             i += 1
-
-        #return [record["message"] for record in result]
 
 
     #para agregar al neo4j el data que el usuario desea
