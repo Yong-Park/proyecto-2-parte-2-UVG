@@ -68,7 +68,7 @@ with open('export.csv', 'r') as csvDataFile:
 
 
 print("Inicializando la Base de Datos...")
-greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
+#greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
 
 #funcion dle menu
 def menu_function(indice_user_recieved):
@@ -528,14 +528,14 @@ while ciclo:
         print("2. Iniciar sesion")
         print("3. Salir del programa")
         opcion = input("Ingrese su opcion: ")
-        if(int(opcion) ==1):
+        if((opcion) =="1"):
             print("Generando nuevo usuario")
             name = input("Ingrese el nombre de la cuenta: ")
             coss = input("Ingrese la contraseña: ")
             user.append(name)
             password.append(coss)
             maindish.append("")
-        elif(int(opcion) ==2):
+        elif((opcion) =="2"):
             print("Iniciar sesion")
             input_user=input("Ingrese su nombre de usuario: ")
             input_pass=input("Ingrese la contraseña: ")
@@ -546,7 +546,7 @@ while ciclo:
                         menu_function(indice_user)
                     else:
                         print("Contraseña incorrecta")
-        elif(int(opcion) ==3):
+        elif((opcion) =="3"):
             print("🍴 Espero que vuelva pronto 🍴")
             ciclo = False
         else:
