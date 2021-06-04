@@ -145,14 +145,52 @@ class HelloWorldExample:
         )
         result = tx.run(query, message=message)
         try:
-            return [{"p1": row["p1"]["name"]}
+            return [{"p1": row["p1"]["message"]}
                     for row in result]
         except ServiceUnavailable as exception:
             logging.error("{query} raised an error: \n {exception}".format(
                 query=query, exception=exception))
             raise
+    #para agregar al neo4j el data que el usuario desea
+    def add_newPlatillo(self,message,price,time,nutrition,relation):
+        with self.driver.session() as session:
+            result = session.write_transactio(self._add_and_return_node,message,price,time,nutrition,relation)
 
+    @staticmethod
+    def _add_and_return_node(tx,message,price,time,nutrition,relation):
+        #creara el nodo
+        result = tx.run("CREATE (a:Relacion) "
+                        "SET a.message = $message "
+                        "RETURN a.message + ', from node ' + id(a)", message=message)
+        #realizar la relacion entre el nodo y su precio
+        if("$price"==("alto")):
+            greeter.add_price_relation("alto","$message")
+        elif("$price"==("medio")):
+            greeter.add_price_relation("medio","$message")
+        elif("$price"==("bajo")):
+            greeter.add_price_relation("bajo","$message")
 
+        #realizar la relacion entre el nodo y su tiempo
+        if("$time"==("rapido")):
+            greeter.add_time_relation("rapido","$message")
+        elif("$time"==("medio")):
+            greeter.add_time_relation("medio","$message")
+        elif("$time"==("lento")):
+            greeter.add_time_relation("lento","$message")
+
+        #realizar la relacion entre el nodo y su nutricion
+        if("$nutricion"==("alta")):
+            greeter.add_nutricion_relation("alta","$message")
+        elif("$nutricion"==("media")):
+            greeter.add_nutricion_relation("media","$message")
+        elif("$nutricion"==("baja")):
+            greeter.add_nutricion_relation("baja","$message")
+        
+        #realizar la relacion entre el nodo y su relacion
+        greeter.add_relation_relation("$relation","$message")
+        
+
+    #para generar los nodos del export.csv
     def Constructor(self,url,password):
         greeter = HelloWorldExample(url, "neo4j", password)
         df = pd.read_csv("export.csv")

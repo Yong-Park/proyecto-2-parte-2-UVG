@@ -421,7 +421,7 @@ def menu_function(indice_user_recieved):
             
             print("Ingresa el contenido nutricional del platillo que desea agregar:")
             print("1. Baja")
-            print("2. Medio") #Puede que en esta parte haya error.
+            print("2. Media") #Puede que en esta parte haya error.
             print("3. Alta\n")
 
             verificador = False
@@ -433,7 +433,7 @@ def menu_function(indice_user_recieved):
                     nutricion = "baja"
                     verificador = True
                 elif(opcion == "2"):
-                    nutricion = "medio"
+                    nutricion = "media"
                     verificador = True
                 elif(opcion == "3"):
                     nutricion = "alta"
@@ -503,6 +503,8 @@ def menu_function(indice_user_recieved):
                     verificador = True
                 else:
                     print("\nOpcion no valida, ingrese uno existente\n")
+
+            HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion)
             
 
 
