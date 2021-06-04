@@ -6,14 +6,36 @@ from csv import writer
 from neo4j.exceptions import ServiceUnavailable
 from neo4j.work.simple import Query
 import pandas as pd
+import neo4j
 
 class HelloWorldExample:
 
     def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+        self.__uri = uri
+        self.__user = user
+        self.__pwd = password
+        self.driver = None
+        try:
+            self.driver = GraphDatabase.driver(self.__uri, auth=(self.__user, self.__pwd))
+        except Exception as e:
+            print("Failed to create the driver:", e)
 
     def close(self):
         self.driver.close()
+
+    def query(self, query, db=None):
+        assert self.driver is not None, "Driver not initialized!"
+        session = None
+        response = None
+        try: 
+            session = self.driver.session(database=db) if db is not None else self.driver.session() 
+            response = list(session.run(query))
+        except Exception as e:
+            print("Query failed:", e)
+        finally: 
+            if session is not None:
+                session.close()
+        return response
 
     #para los platillos
     def add_Platillos(self, message):
@@ -181,31 +203,37 @@ class HelloWorldExample:
     
     
     #buscar y mostrar las relaciones que tiene el nodo
-    def find_node(self, node):
+    def find_node(self, price, time, nutrition, relation):
         with self.driver.session() as session:
-            result = session.read_transaction(self._find_and_return_node, node)
+            result = session.read_transaction(self._find_and_return_node, price, time, nutrition, relation)
             #for record in result:
                 #print("Found person: {record}".format(record=record))
 
     @staticmethod
-    def _find_and_return_node(tx, node):
+    def _find_and_return_node(tx, price, time, nutrition, relation):
+        recomendacion = ""
         query = (
-            "Match (n)-[r]->(m:Platillos{message:'$node'})"
-            "Return n"
+            '''
+            MATCH (p: Platillos)<-[:precio]-(p1:Precio{message:"%s"}),
+            (p)<-[:tiempo]-(p2:Tiempo{message:"%s"}),
+            (p)<-[:nutricion]-(p3:Nutricion{message:"%s"}),
+            (p)<-[:ingrediente]-(p4:Relacion{message:"%s"}) return p.message
+            '''%(price, time, nutrition, relation)
         )
-        result = tx.run(query, node=node)
-        properties = result.values()
-        print(properties)
+        greeter = HelloWorldExample(uri="bolt://34.205.171.52:7687", user="neo4j", password="light-mirrors-plants")
+        result = greeter.query(query, 'neo4j')
+        print(result)
+
         #return [record["message"] for record in result]
 
 
     #para agregar al neo4j el data que el usuario desea
-    def add_newPlatillo(self,message,price,time,nutrition,relation,base):
+    def add_newPlatillo(self,message,price,time,nutrition,relation):
         with self.driver.session() as session:
-            result = session.write_transaction(self._add_and_return_node,message,price,time,nutrition,relation,base)
+            result = session.write_transaction(self._add_and_return_node,message,price,time,nutrition,relation)
 
     @staticmethod
-    def _add_and_return_node(tx,message,price,time,nutrition,relation,base):
+    def _add_and_return_node(tx,message,price,time,nutrition,relation):
         #creara el nodo
         result = tx.run("CREATE (a:Platillos) "
                         "SET a.message = $message "

@@ -1,5 +1,5 @@
 food,precio,tiempo,nutricion,relacion
-pizza,alto medio bajo,rapido medio lento,media alta,carne
+pizza,alto medio bajo,rapido medio lento,media alta,carne pan
 sushi,alto medio bajo,rapido medio,alta media,mariscos
 pasta a la boloñesa,alto medio,medio lento,media,carne pasta
 lasagna,medio bajo,rapido medio lento,media alta,pasta carne

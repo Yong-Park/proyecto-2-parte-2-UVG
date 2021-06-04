@@ -23,10 +23,10 @@ nutricionGeneral=["alta","media","baja"]
 priceGeneral=["alto","medio","bajo"]
 
 # Se guarda la eleccion del usuario
-myfood = ""
-myprice = ""
-mytime= ""
-mynutricion= ""
+myfood = "-"
+myprice = "-"
+mytime= "-"
+mynutricion= "-"
 
 # Listas donde se guarda la recomendacion
 foodInterest=[]
@@ -237,7 +237,7 @@ def menu_function(indice_user_recieved):
 
             #buscar platillos que satisfacen con lo que se desea
             elif(opcion=="5"):
-                HelloWorldExample.find_node(greeter, "Pedro")
+                HelloWorldExample.find_node(greeter,"alto", "rapido", "alta", "mariscos")
                 """
                 nutricioncopy=[]
                 #limpiar el original
@@ -491,7 +491,7 @@ def menu_function(indice_user_recieved):
             content.append(nutricion)
             content.append(relacion)
             HelloWorldExample.add_row('export.csv',content)
-            HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion,greeter)
+            HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion)
             
 
 
