@@ -68,7 +68,7 @@ with open('export.csv', 'r') as csvDataFile:
 
 
 print("Inicializando la Base de Datos...")
-greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
+greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://18.212.170.6:7687", "makeup-evacuation-syntax")
 
 #funcion dle menu
 def menu_function(indice_user_recieved):
@@ -456,11 +456,12 @@ def menu_function(indice_user_recieved):
             print("11. Mousse")
             print("12. Chocolate")
             print("13. Mariscos\n")
-            opcion = input("")
+            
 
             verificador = False
 
             while(verificador == False):
+                opcion = input("")
 
                 if(opcion == "1"):
                     relacion = "carne"
