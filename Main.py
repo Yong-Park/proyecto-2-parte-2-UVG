@@ -68,7 +68,7 @@ with open('export.csv', 'r') as csvDataFile:
 
 
 print("Inicializando la Base de Datos...")
-#greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
+greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
 
 #funcion dle menu
 def menu_function(indice_user_recieved):
