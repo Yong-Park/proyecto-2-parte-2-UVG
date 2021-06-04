@@ -1,6 +1,8 @@
 #codigo obtenido de https://neo4j.com/docs/api/python-driver/current/
 from neo4j import GraphDatabase
 import logging
+import csv
+from csv import writer
 from neo4j.exceptions import ServiceUnavailable
 from neo4j.work.simple import Query
 import pandas as pd
@@ -80,6 +82,11 @@ class HelloWorldExample:
         with self.driver.session() as session:
             session.write_transaction(self.create_time_relation,message1,message2)
 
+    def add_row(filename, listofelement):
+        with open(filename, 'a', newline='') as write_obj:
+            csv_writer = writer(write_obj)
+            csv_writer.writerow(listofelement)
+
     @staticmethod
     def create_time_relation(tx, message1, message2):
         query = (
@@ -151,43 +158,134 @@ class HelloWorldExample:
             logging.error("{query} raised an error: \n {exception}".format(
                 query=query, exception=exception))
             raise
-    #para agregar al neo4j el data que el usuario desea
-    def add_newPlatillo(self,message,price,time,nutrition,relation):
+    
+    @staticmethod
+    def delete_platillo(nombre):
+        updatedlist=[]
+        with open("export.csv",newline="") as platillos:
+            reader = csv.reader(platillos)
+            platillo_eliminar = nombre
+
+        for row in reader: #for every row in the file
+            
+            if row[0]!=platillo_eliminar: #as long as the username is not in the row .......
+                updatedlist.append(row) #add each row, line by line, into a list called 'udpatedlist'
+      
+        print(updatedlist)
+        updatefileDeleted(updatedlist)
+
+    def updatefileDeleted(updatedlist):
+        with open("export.csv","w",newline="") as platillos:
+            Writer=csv.writer(platillos)
+            Writer.writerows(updatedlist)
+    
+    
+    #buscar y mostrar las relaciones que tiene el nodo
+    def find_node(self, node):
         with self.driver.session() as session:
-            result = session.write_transactio(self._add_and_return_node,message,price,time,nutrition,relation)
+            result = session.read_transaction(self._find_and_return_node, node)
+            #for record in result:
+                #print("Found person: {record}".format(record=record))
 
     @staticmethod
-    def _add_and_return_node(tx,message,price,time,nutrition,relation):
+    def _find_and_return_node(tx, node):
+        query = (
+            "Match (n)-[r]->(m:Platillos{message:'$node'})"
+            "Return n"
+        )
+        result = tx.run(query, node=node)
+        properties = result.values()
+        print(properties)
+        #return [record["message"] for record in result]
+
+
+    #para agregar al neo4j el data que el usuario desea
+    def add_newPlatillo(self,message,price,time,nutrition,relation,base):
+        with self.driver.session() as session:
+            result = session.write_transaction(self._add_and_return_node,message,price,time,nutrition,relation,base)
+
+    @staticmethod
+    def _add_and_return_node(tx,message,price,time,nutrition,relation,base):
         #creara el nodo
-        result = tx.run("CREATE (a:Relacion) "
+        result = tx.run("CREATE (a:Platillos) "
                         "SET a.message = $message "
                         "RETURN a.message + ', from node ' + id(a)", message=message)
         #realizar la relacion entre el nodo y su precio
-        if("$price"==("alto")):
-            greeter.add_price_relation("alto","$message")
-        elif("$price"==("medio")):
-            greeter.add_price_relation("medio","$message")
-        elif("$price"==("bajo")):
-            greeter.add_price_relation("bajo","$message")
+        if(price==("alto")):
+            query = (
+            "MATCH (p1:Precio {message : $price}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:precio]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, price=price, message=message)
+        elif(price==("medio")):
+            query = (
+            "MATCH (p1:Precio {message : $price}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:precio]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, price=price, message=message)
+        elif(price==("bajo")):
+            query = (
+            "MATCH (p1:Precio {message : $price}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:precio]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, price=price, message=message)
 
         #realizar la relacion entre el nodo y su tiempo
-        if("$time"==("rapido")):
-            greeter.add_time_relation("rapido","$message")
-        elif("$time"==("medio")):
-            greeter.add_time_relation("medio","$message")
-        elif("$time"==("lento")):
-            greeter.add_time_relation("lento","$message")
+        if(time==("rapido")):
+            query = (
+            "MATCH (p1:Tiempo {message : $time}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:tiempo]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, time=time, message=message)
+        elif(time==("medio")):
+            query = (
+            "MATCH (p1:Tiempo {message : $time}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:tiempo]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, time=time, message=message)
+        elif(time==("lento")):
+            query = (
+            "MATCH (p1:Tiempo {message : $time}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:tiempo]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, time=time, message=message)
 
         #realizar la relacion entre el nodo y su nutricion
-        if("$nutricion"==("alta")):
-            greeter.add_nutricion_relation("alta","$message")
-        elif("$nutricion"==("media")):
-            greeter.add_nutricion_relation("media","$message")
-        elif("$nutricion"==("baja")):
-            greeter.add_nutricion_relation("baja","$message")
+        if(nutrition==("alta")):    
+            query = (
+            "MATCH (p1:Nutricion {message : $nutrition}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:nutricion]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, nutrition=nutrition, message=message)
+        elif(nutrition==("media")):
+            query = (
+            "MATCH (p1:Nutricion {message : $nutrition}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:nutricion]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, nutrition=nutrition, message=message)
+        elif(nutrition==("baja")):
+            query = (
+            "MATCH (p1:Nutricion {message : $nutrition}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:nutricion]->(p2) "
+            "RETURN p1, p2"
+            )
+            result = tx.run(query, nutrition=nutrition, message=message)
         
         #realizar la relacion entre el nodo y su relacion
-        greeter.add_relation_relation("$relation","$message")
+        query = (
+            "MATCH (p1:Relacion {message : $relation}), (p2:Platillos {message: $message})"
+            "CREATE (p1)-[:ingrediente]->(p2) "
+            "RETURN p1, p2"
+        )
+        result = tx.run(query, relation=relation, message=message)
         
 
     #para generar los nodos del export.csv

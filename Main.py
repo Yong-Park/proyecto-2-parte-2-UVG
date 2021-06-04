@@ -23,10 +23,10 @@ nutricionGeneral=["alta","media","baja"]
 priceGeneral=["alto","medio","bajo"]
 
 # Se guarda la eleccion del usuario
-myfood =[]
-myprice =[]
-mytime=[]
-mynutricion=[]
+myfood = ""
+myprice = ""
+mytime= ""
+mynutricion= ""
 
 # Listas donde se guarda la recomendacion
 foodInterest=[]
@@ -68,7 +68,7 @@ with open('export.csv', 'r') as csvDataFile:
 
 
 print("Inicializando la Base de Datos...")
-greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://18.212.170.6:7687", "makeup-evacuation-syntax")
+greeter = HelloWorldExample.Constructor(HelloWorldExample, "bolt://34.205.171.52:7687", "light-mirrors-plants")
 
 #funcion dle menu
 def menu_function(indice_user_recieved):
@@ -101,28 +101,22 @@ def menu_function(indice_user_recieved):
                 
                 # Se muestran los platillos disponibles para el usuario
                 comida = True
-                while comida:
+                while(comida):
                     for tipoPlatillo in platillos:
                         print("\n------- INGREDIENTES -------\n")
                         print(tipoPlatillo)
                         print("1. Agregar ingrediente a la lista")
                         print("2. Siguiente ingrediente")
-                        print("3. Quitar ingrediente de la lista")
-                        print("4. Regresar al menu principal\n")
+                        print("3. Regresar al menu principal\n")
                         
                         op = input("Ingrese una opcion: ")
                         if(op=="1"):
-                            if(list.__contains__(myfood,tipoPlatillo)):
-                                print("\nYa tienes seleccionado dicho ingrediente")
-                            else:
-                                myfood.append(tipoPlatillo)
+                            myfood = tipoPlatillo
+                            comida = False
+                            break
                         elif(op=="2"):
                             True
                         elif(op=="3"):
-                            if(list.__contains__(myfood,tipoPlatillo)):
-                                myfood.remove(tipoPlatillo)
-                                print("\nSe ha eliminado el ingrediente de la lista")
-                        elif(op=="4"):
                             comida=False
                             break
                         else:
@@ -148,21 +142,15 @@ def menu_function(indice_user_recieved):
                             print(tipoTiempo)
                             print("1. Seleccionar tiempo de preparacion")
                             print("2. Siguiente opcion")
-                            print("3. Eliminar opcion de tiempo de preparacion")
-                            print("4. Regresar al menu principal\n")
+                            print("3. Regresar al menu principal\n")
                             op = input("Ingrese una opcion: ")
                             if(op=="1"):
-                                if(list.__contains__(mytime,tipoTiempo)):
-                                    print("\nYa tienes seleccionado dicho tiempo de preparacion")
-                                else:
-                                    mytime.append(tipoTiempo)
+                                mytime = tipoTiempo
+                                tiempo = False
+                                break
                             elif(op=="2"):
                                 True
                             elif(op=="3"):
-                                if(list.__contains__(mytime,tipoTiempo)):
-                                    mytime.remove(tipoTiempo)
-                                    print("\nSe ha eliminado el tiempo de preparacion de la lista")
-                            elif(op=="4"):
                                 tiempo=False
                                 break
                             else:
@@ -188,21 +176,15 @@ def menu_function(indice_user_recieved):
                             print(tipoNutricion)
                             print("1. Agregar el contenido nutricional deseado a la lista")
                             print("2. Siguiente opcion de contenido nutricional")
-                            print("3. Eliminar seleccion de contenido nutricional de la lista")
-                            print("4. Regresar al menu principal\n")
+                            print("3. Regresar al menu principal\n")
                             op = input("Ingrese una opcion: ")
                             if(op=="1"):
-                                if(list.__contains__(mynutricion,tipoNutricion)):
-                                    print("\nYa tienes seleccionado dicho contenido nutricional")
-                                else:
-                                    mynutricion.append(tipoNutricion)
+                                mynutricion = tipoNutricion
+                                nutri = False
+                                break
                             elif(op=="2"):
                                 True
                             elif(op=="3"):
-                                if(list.__contains__(mynutricion,tipoNutricion)):
-                                    mynutricion.remove(tipoNutricion)
-                                    print("\nSe ha eliminado el contenido nutricional de la lista")
-                            elif(op=="4"):
                                 nutri=False
                                 break
                             else:
@@ -228,21 +210,15 @@ def menu_function(indice_user_recieved):
                             print(tipoPrecio)
                             print("1. Agregar el tipo de precio deseado a la lista")
                             print("2. Siguiente opcion de tipo de precio")
-                            print("3. Eliminar el precio deseado de la lista")
-                            print("4. Regresar al menu principal\n")
+                            print("3. Regresar al menu principal\n")
                             op = input("Ingrese una opcion: ")
                             if(op=="1"):
-                                if(list.__contains__(myprice,tipoPrecio)):
-                                    print("\nYa tienes seleccionado dicha opcion del tipo de precio deseado")
-                                else:
-                                    myprice.append(tipoPrecio)
+                                myprice = tipoPrecio
+                                precio = False
+                                break
                             elif(op=="2"):
                                 True
                             elif(op=="3"):
-                                if(list.__contains__(myprice,tipoPrecio)):
-                                    myprice.remove(tipoPrecio)
-                                    print("\nSe ha eliminado la seleccion del tipo de precio")
-                            elif(op=="4"):
                                 precio=False
                                 break
                             else:
@@ -261,6 +237,8 @@ def menu_function(indice_user_recieved):
 
             #buscar platillos que satisfacen con lo que se desea
             elif(opcion=="5"):
+                HelloWorldExample.find_node(greeter, "Pedro")
+                """
                 nutricioncopy=[]
                 #limpiar el original
                 foodInterest.clear()
@@ -281,10 +259,10 @@ def menu_function(indice_user_recieved):
                                     foodInterest.append(food[i])
                                     timeInterest.append(time[i])   
                                     priceInterest.append(price[i])   
-                                    nutricionInterest.append(nutricion[i])                 
+                                    nutricionInterest.append(str(nutricion[i]))                 
                         #aumentar
-                        i=i+1
-
+                        i=i+1 
+                
                 #para el tiempo
                 if(len(mytime)!=0):
                     i=0
@@ -349,7 +327,7 @@ def menu_function(indice_user_recieved):
                         data = data + 1
                         foodCounter.insert(food_index, data)
 
-                maindish.insert(int(indice_user_recieved),foodInterest)
+                maindish.insert(int(indice_user_recieved),foodInterest)"""
                 
             #terminar el ciclo
             elif(opcion=="6"):
@@ -377,11 +355,13 @@ def menu_function(indice_user_recieved):
             print("1. Bajo")
             print("2. Medio")
             print("3. Alto\n")
-
+            
             verificador = False
 
             while(verificador == False):
-
+                
+                opcion = input("")
+                
                 if(opcion == "1"):
                     precio = "bajo"
                     verificador = True
@@ -504,8 +484,14 @@ def menu_function(indice_user_recieved):
                     verificador = True
                 else:
                     print("\nOpcion no valida, ingrese uno existente\n")
-
-            HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion)
+            content = []
+            content.append(nombre)
+            content.append(precio)
+            content.append(tiempo)
+            content.append(nutricion)
+            content.append(relacion)
+            HelloWorldExample.add_row('export.csv',content)
+            HelloWorldExample.add_newPlatillo(greeter, nombre, precio, tiempo, nutricion, relacion,greeter)
             
 
 
@@ -514,6 +500,7 @@ def menu_function(indice_user_recieved):
             print("Ingresa el nombre del platillo que desea eliminar:")
             nombre = input("")
             HelloWorldExample.delete_relationship(greeter, nombre)
+            HelloWorldExample.delete_platillo(nombre)
 
         elif(int(opcionprincipal) == 4):
             print("🍴 Gracias por utilizar el sistema de recomendaciones 🍴")
