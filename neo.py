@@ -219,7 +219,7 @@ class HelloWorldExample:
 
     @staticmethod
     def _find_and_return_node(tx, price, time, nutrition, relation, base):
-        recomendacion = ""
+        result = []
         query = (
             '''
             MATCH (p: Platillos)<-[:precio]-(p1:Precio{message:"%s"}),
@@ -229,10 +229,14 @@ class HelloWorldExample:
             '''%(price, time, nutrition, relation)
         )
         result = base.query(query, 'neo4j')
-        i = 1
-        for elements in result:
-            print(str(i) + ") "+ elements["p.message"])
-            i += 1
+        if(len(result) != 0):
+            i = 1
+            for elements in result:
+                print(str(i) + ") "+ elements["p.message"])
+                i += 1
+        else:
+            print("Lo sentimos, la recomendacion dependiendo de estas caracteristicas no se encuentra en nuestra base de datos")
+            print("Si conoce alguna recomendacion relacionada, puede agregarla :)")
 
 
     #para agregar al neo4j el data que el usuario desea
